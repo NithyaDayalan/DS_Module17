@@ -1,75 +1,82 @@
-# Ex 5B Breadth First Graph
+# Ex 5A Representation of Graph
 ## DATE:
 ## AIM:
-To write a printQueue C function of the given graph that is to be traversed in the breadth first manner.
-
-![image](https://github.com/user-attachments/assets/f483f48c-6af0-4027-a993-01c108a50933)
-
+To write a C program to display the adjacency matrix of the given graph by supplying the edges and the number of vertices.
 
 ## Algorithm
 1. Start the program.
-2. Start from the front index of the queue.
-3. If the queue is empty, print "Queue is empty".
-4. Otherwise, print "Queue contains" and display all items from front to rear.
-5. Return after printing the queue contents.
-6. End the program.
+2. Read the value of V (number of vertices).
+3. Declare an adjacency matrix adjMatrix[V][V].
+4. Initialize the matrix to 0 using the init function.
+5. Calculate the maximum number of edges me as n * (n - 1) / 2.
+6. For each edge, read e1 and e2, add the edge to the adjacency matrix, and stop if e1 == -1 && e2 == -1.
+7. Print the adjacency matrix.
+8. End the program.
 
 ## Program:
 ```
 /*
-Program to traverse graph using BFS
+Program to display the adjacency matrix of the given graph
 Developed by: NITHYA D
 RegisterNumber: 212223240110
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 
-#define SIZE 40
+int V;
 
-struct queue {
-    int items[SIZE];
-    int front;
-    int rear;
-};
-
-struct queue* createQueue();
-void enqueue(struct queue* q, int);
-int dequeue(struct queue* q);
-void display(struct queue* q);
-int isEmpty(struct queue* q);
-void printQueue(struct queue* q);
-
-struct node {
-    int vertex;
-    struct node* next;
-};
-
-struct node* createNode(int);
-
-struct Graph {
-    int numVertices;
-    struct node** adjLists;
-    int* visited;
-};
-
-void printQueue(struct queue* q) {
-    int i = q->front;
-    if (isEmpty(q)) {
-        printf("Queue is empty");
-    } else {
-        printf("Queue contains ");
-        for (i = q->front; i <= q->rear; i++) {
-            printf("%d", q->items[i]);
+void init(int arr[][V]) {
+    int i, j;
+    for (i = 0; i < V; i++) {
+        for (j = 0; j < V; j++) {
+            arr[i][j] = 0;
         }
     }
+}
+
+void addEdge(int arr[][V], int e1, int e2) {
+    arr[e1][e2] = 1;
+    arr[e2][e1] = 1;
+}
+
+void printAdjMatrix(int arr[][V]) {
+    int i, j;
+    for (i = 0; i < V; i++) {
+        for (j = 0; j < V; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int e1, e2, me, n, i;
+    scanf("%d", &V);
+
+    int adjMatrix[V][V];
+    init(adjMatrix);
+
+    n = V;
+    me = n * (n - 1) / 2;
+
+    for (i = 0; i < me; i++) {
+        scanf("%d%d", &e1, &e2);
+        if (e1 == -1 && e2 == -1) {
+            break;
+        }
+        addEdge(adjMatrix, e1, e2);
+    }
+
+    printAdjMatrix(adjMatrix);
+
+    return 0;
 }
 
 ```
 
 ## Output:
 
-![image](https://github.com/user-attachments/assets/96058575-e291-48b2-addb-7f3d34039b80)
+![image](https://github.com/user-attachments/assets/b2313ef0-0ec6-45fc-8ce6-adeecaf22504)
 
 ## Result:
-Thus, the code for the printQueue function of the following graph that is to be traversed in the breadth first manner is implemented successfully.
+Thus, the C program to print the adjacency matrix of the given graph is implemented successfully.
